@@ -62,14 +62,13 @@ const Time = styled(motion.div)`
 
 const time = {
   initial: {
-    scale: 0,
+    // opacity: 0.5,
+    scale: 0
   },
   animate: {
-    scale: 1,
+    // opacity: 1,
+    scale: 1
   },
-  exit: {
-    scale: 0,
-  }
 
 }
 const Colon = styled.div`
@@ -110,7 +109,6 @@ function App() {
   const setRound = useSetRecoilState(roundAtom);
   const round = useRecoilValue(roundAtom);
   const [stop, setStop] = useState(false);
-  const [count, setCount] = useState(true);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -121,18 +119,18 @@ function App() {
         else {
           if (minutes !== 0) {
             setMinutes((c) => c - 1);
-            setSecond(2);
+            setSecond(59);
           } else {
-            if (round !== 1) {
+            if (round !== 3) {
               setRound((c) => c + 1);
-              setMinutes(1);
-              setSecond(2);
+              setMinutes(24);
+              setSecond(59);
             } else {
               setGoal((c) => c + 1);
-              if (goal !== 1) {
+              if (goal !== 11) {
                 setRound(0);
-                setMinutes(1);
-                setSecond(2);
+                setMinutes(24);
+                setSecond(59);
               } else {
                 setRound((c) => c + 1);
                 clearInterval(timer);
@@ -161,17 +159,20 @@ function App() {
             variants={time}
             initial="initial"
             animate="animate"
-            exit="exit"
+            transition={{ type: "spring" }}
+            key={`${minutes}-minutes`} // 방법이 기억나질 않아서 구현 못한채로 제출
           >
-            {minutes > 10 ? minutes : "0" + minutes}
+            {minutes > 9 ? minutes : "0" + minutes}
           </Time>
           <Colon>:</Colon>
           <Time
             variants={time}
             initial="initial"
             animate="animate"
+            transition={{ type: "spring" }}
+            key={`${second}-second`} // 방법이 기억나질 않아서 구현 못한채로 제출
           >
-            {second > 10 ? second : "0" + second}
+            {second > 9 ? second : "0" + second}
           </Time>
 
         </Section1>
@@ -199,8 +200,8 @@ function App() {
       </Body>
       <Footer>
         <Section3>
-          <Result>{round}/2</Result>
-          <Result>{goal}/2</Result>
+          <Result>{round}/4</Result>
+          <Result>{goal}/12</Result>
           <Subject>ROUND</Subject>
           <Subject>GOAL</Subject>
         </Section3>

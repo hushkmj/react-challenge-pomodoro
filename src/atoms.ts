@@ -2,12 +2,12 @@ import { atom } from "recoil";
 
 export const minutesAtom = atom({
     key: "minute",
-    default: 1
+    default: 25
 });
 
 export const secondAtom = atom({
     key: "second",
-    default: 2
+    default: 0
 });
 
 export const roundAtom = atom({
